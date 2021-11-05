@@ -14,14 +14,14 @@ export default function App() {
   );
 }
 
-// let example_data = [
-//     {
-//         name:'Application',
-//         username: 'name',
-//         totp: '000000',
-//         uri: 'https://reactnative.dev/img/tiny_logo.png'
-//     }
-// ]
+let example_data = [
+    {
+        name:'Application',
+        username: 'name',
+        totp: '000000',
+        uri: 'https://reactnative.dev/img/tiny_logo.png'
+    }
+]
 
 const styles = StyleSheet.create({
   container: {
