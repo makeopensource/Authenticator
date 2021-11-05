@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import ApplicationListItem from "../components/application-list-item"
 
-export default function ApplicationList() {
+export default function ApplicationList(props) {
     return (
         <View>
             <FlatList
-                data={example_data}
+                data={props.data}
                 renderItem={ApplicationListItem}
             />
         </View>
@@ -14,11 +14,3 @@ export default function ApplicationList() {
     );
 }
 
-// let example_data = [
-//     {
-//         name:'Application',
-//         username: 'name',
-//         totp: '000000',
-//         uri: 'https://reactnative.dev/img/tiny_logo.png'
-//     }
-// ]
