@@ -50,5 +50,4 @@ An essential component is code authentication from the application: the applicat
 * https://reactnative.dev/
 * https://docs.mongodb.com/realm/
 
-## Contact
-Emil Kovacev Junior Computer Science BS – University at Buffalo
+**This readme will be constantly changing and is very open to feedback and clarification through issues.**
