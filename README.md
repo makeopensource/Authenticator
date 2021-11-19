@@ -1,6 +1,6 @@
 # Authenticator
 
-An authenticator app is an application that acts as a secondary device to verify your identity when logging in to account-based platforms as another level of security. 2-factor authenticator apps utilize another device as an additional key to unlock accounts. An open-source authenticator app with additional quality-of-life features that easily integrates into existing applications and offers similar/better levels of security and convenience as paid alternatives.
+An authenticator app is an application that acts as a secondary device to verify your identity when logging in to account-based platforms as another level of security. 2-factor authenticator apps utilize another device as an additional key to unlock accounts. MakeOpenSource Authenticator is an open-source authenticator app with additional quality-of-life features that easily integrates into existing applications and offers similar/better levels of security and convenience as paid alternatives.
 
 ## Tools
 
