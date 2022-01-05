@@ -1,16 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
-import ApplicationListItem from "../components/application-list-item"
+import { View, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
+import ApplicationListItem from '../components/application-list-item';
 
-export default function ApplicationList(props) {
-    return (
-        <View>
-            <FlatList
-                data={props.data}
-                renderItem={ApplicationListItem}
-            />
-        </View>
-
-    );
+export default function ApplicationList({ data }) {
+  return (
+    <View>
+      <FlatList
+        data={data}
+        renderItem={ApplicationListItem}
+        keyExtractor={(_, i) => i.toString()}
+      />
+    </View>
+  );
 }
 
+ApplicationList.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    totp: PropTypes.string.isRequired,
+    uri: PropTypes.string.isRequired,
+  })).isRequired,
+};
