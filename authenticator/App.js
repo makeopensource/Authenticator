@@ -6,6 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import ApplicationList from './views/application-list';
 import Settings from './views/settings';
 import New from './views/new';
+import Confirm from './views/confirm';
 import { SettingsButton, NewButton, HomeButton } from './components/navigation-buttons';
 
 const exampleData = [
@@ -55,6 +56,14 @@ export default function App() {
             component={New}
             options={(props) => ({
               title: 'New',
+              headerLeft: () => HomeButton(props),
+            })}
+          />
+          <Stack.Screen
+            name="confirm"
+            component={Confirm}
+            options={(props) => ({
+              title: 'Confirm',
               headerLeft: () => HomeButton(props),
             })}
           />
