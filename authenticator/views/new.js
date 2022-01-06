@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 
@@ -26,7 +26,7 @@ export default function New(props) {
     }
     setMostRecentScan(data);
 
-    let decoded = decodeURI(data);
+    const decoded = decodeURI(data);
 
     // check the uri scheme
     if (decoded.slice(0, 8) != "otpauth:") {
@@ -35,13 +35,13 @@ export default function New(props) {
       return;
     }
 
-    let information = {};
+    const information = {};
 
-    information["type"] = decoded.slice(10, 14);
-    information["issuer"] = decoded.match("\/[^\/]*:")[0].slice(1, -1);
-    information["account"] = decoded.match(":[^:]*[?]")[0].slice(1, -1);
+    information.type = decoded.slice(10, 14);
+    information.issuer = decoded.match("\/[^\/]*:")[0].slice(1, -1);
+    information.account = decoded.match(":[^:]*[?]")[0].slice(1, -1);
 
-    let querryParams = decoded.match("[?].*")[0].slice(1).split("&");
+    const querryParams = decoded.match("[?].*")[0].slice(1).split("&");
     for (let cur of querryParams) {
       let keyVal = cur.split("=");
       information[keyVal[0]] = keyVal[1];
