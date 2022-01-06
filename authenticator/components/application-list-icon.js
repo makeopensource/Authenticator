@@ -1,22 +1,23 @@
 import React from 'react';
 import { StyleSheet, Image, View } from 'react-native';
+import PropTypes from 'prop-types';
 
-export default function ApplicationListIcon(props) {
-    const styles = StyleSheet.create({
-        logo: {
-            width: props.width,
-            height: props.height,
-        },
-    });
+export default function ApplicationListIcon({ width, height, uri }) {
+  const styles = StyleSheet.create({
+    logo: { width, height },
+  });
 
-    let url = {
-        uri: props.uri
-    };
+  const url = { uri };
 
-    return (
-        <View>
-            <Image style={styles.logo} source={ url } />
-        </View>
-    );
+  return (
+    <View>
+      <Image style={styles.logo} source={url} />
+    </View>
+  );
 }
 
+ApplicationListIcon.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  uri: PropTypes.string.isRequired,
+};
