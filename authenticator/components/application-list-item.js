@@ -12,8 +12,8 @@ export default function ApplicationListItem(props) {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            margin: '10px',
-            height: '100px',
+            margin: 10,
+            height: 100,
         },
         nameText: {
             fontSize:20

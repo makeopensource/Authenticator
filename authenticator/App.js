@@ -6,6 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import ApplicationList from './views/application-list';
 import Settings from './views/settings';
 import New from './views/new';
+import Confirm from './views/confirm';
 import IconButton from './components/icon-button';
 import HomeIcon from './assets/navigation_icons/home.png';
 import SettingsIcon from './assets/navigation_icons/settings.png';
@@ -36,6 +37,12 @@ export default function App() {
               })}
             />
             <Stack.Screen name='new' component={New}
+              options={props => ({
+                title: 'New',
+                headerLeft: () => <IconButton onPress={() => props.navigation.navigate('application-list')} img={HomeIcon} />
+              })}
+            />
+            <Stack.Screen name='confirm' component={Confirm}
               options={props => ({
                 title: 'New',
                 headerLeft: () => <IconButton onPress={() => props.navigation.navigate('application-list')} img={HomeIcon} />
