@@ -8,6 +8,7 @@ import Settings from './views/settings';
 import New from './views/new';
 import Confirm from './views/confirm';
 import { SettingsButton, NewButton, HomeButton } from './components/navigation-buttons';
+import ColorPickerSetting from './views/color-picker-setting';
 
 const exampleData = [
   {
@@ -50,6 +51,11 @@ export default function App() {
               title: 'Settings',
               headerLeft: () => HomeButton(props),
             })}
+          />
+          <Stack.Screen
+            name="color-picker-setting"
+            component={ColorPickerSetting}
+            options={{ title: 'Settings' }}
           />
           <Stack.Screen
             name="new"
