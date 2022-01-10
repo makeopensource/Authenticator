@@ -1,8 +1,8 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
 import ColorPalette from 'react-native-color-palette';
-import { SettingsButton } from '../components/navigation-buttons';
+import { SettingsContext } from '../settings-provider';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,15 +15,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function ColorPickerSetting({ navigation, route }) {
-  const { title, currentColor, id } = route.params;
-  const [color, setColor] = useState(currentColor);
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => SettingsButton({ navigation, params: { color, colorId: id } }),
-    });
-  }, [navigation, color, id]);
+export default function ColorPickerSetting({ route }) {
+  const { key, title } = route.params;
+  const settings = useContext(SettingsContext);
+  const color = settings.data[key];
 
   const colors = [
     '#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9', '#3498DB', '#1ABC9C',
@@ -36,7 +31,7 @@ export default function ColorPickerSetting({ navigation, route }) {
       <Text style={styles.title}>{title}</Text>
       <ColorPalette
         colors={colors}
-        onChange={setColor}
+        onChange={(value) => settings.update({ [key]: value })}
         value={color}
         title=""
         scaleToWindow
@@ -46,15 +41,10 @@ export default function ColorPickerSetting({ navigation, route }) {
 }
 
 ColorPickerSetting.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-    setOptions: PropTypes.func.isRequired,
-  }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
+      key: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      currentColor: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

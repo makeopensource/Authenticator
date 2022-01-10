@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { SectionList, Text, StyleSheet } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { PropTypes } from 'prop-types';
@@ -36,25 +36,7 @@ function SettingsButton({ title, onPress }) {
   );
 }
 
-export default function Settings({ navigation, route }) {
-  const colors = {
-    font: useState('#000000'),
-    primary: useState('#F2F2F2'),
-    accent: useState('#FFFFFF'),
-  };
-
-  // Load from persistent storage in useEffect hook here
-
-  useEffect(() => {
-    if (route.params?.color && route.params?.colorId) {
-      // Set state for appropriate color
-      const { color, colorId } = route.params;
-      colors[colorId][1](color);
-
-      // Save to persistent storage here
-    }
-  });
-
+export default function Settings({ navigation }) {
   const accessibility = {
     title: 'Accessibility',
     data: [
@@ -63,9 +45,8 @@ export default function Settings({ navigation, route }) {
       {
         title: 'Font Color',
         onPress: () => navigation.navigate('color-picker-setting', {
+          key: 'fontColor',
           title: 'Font Color',
-          id: 'font',
-          currentColor: colors.font[0],
         }),
       },
     ],
@@ -77,17 +58,15 @@ export default function Settings({ navigation, route }) {
       {
         title: 'Primary Color',
         onPress: () => navigation.navigate('color-picker-setting', {
+          key: 'primaryColor',
           title: 'Primary Color',
-          id: 'primary',
-          currentColor: colors.primary[0],
         }),
       },
       {
         title: 'Accent Color',
         onPress: () => navigation.navigate('color-picker-setting', {
+          key: 'accentColor',
           title: 'Accent Color',
-          id: 'accent',
-          currentColor: colors.accent[0],
         }),
       },
     ],
@@ -121,12 +100,6 @@ export default function Settings({ navigation, route }) {
 Settings.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      color: PropTypes.string,
-      colorId: PropTypes.string,
-    }),
   }).isRequired,
 };
 
