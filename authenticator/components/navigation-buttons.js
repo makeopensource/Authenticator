@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HomeIcon from '../assets/navigation_icons/home.png';
-import SettingsIcon from '../assets/navigation_icons/settings.png';
-import PlusIcon from '../assets/navigation_icons/plus-circle.png';
-import IconButton from './icon-button';
+import SvgButton from './svg-button';
+import { GearSvg, PlusSvg, HomeSvg } from './svgs';
 
 function SettingsButton({ navigation, params }) {
-  return <IconButton onPress={() => navigation.navigate('settings', params)} img={SettingsIcon} />;
+  return <SvgButton onPress={() => navigation.navigate('settings', params)} svg={GearSvg()} />;
 }
 
 function NewButton({ navigation, params }) {
-  return <IconButton onPress={() => navigation.navigate('new', params)} img={PlusIcon} />;
+  return <SvgButton onPress={() => navigation.navigate('new', params)} svg={PlusSvg()} />;
 }
 
 function HomeButton({ navigation, params }) {
-  return <IconButton onPress={() => navigation.navigate('application-list', params)} img={HomeIcon} />;
+  return <SvgButton onPress={() => navigation.navigate('application-list', params)} svg={HomeSvg()} />;
 }
 
 const navigationButtonPropTypes = {
