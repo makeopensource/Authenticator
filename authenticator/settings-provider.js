@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useLayoutEffect, useMemo, useState,
+  useCallback, useLayoutEffect, useMemo, useState, useContext,
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { getSettingsStorage, updateSettingsStorage } from './settings-storage';
@@ -33,7 +33,8 @@ export default function SettingsProvider({ children }) {
   useLayoutEffect(() => {
     async function loadStoredSettings() {
       const storedSettings = await getSettingsStorage();
-      setSettings(Object.assign(defaultSettings, storedSettings));
+      const copy = { ...defaultSettings };
+      setSettings(Object.assign(copy, storedSettings));
     }
     loadStoredSettings();
   }, []);
@@ -45,13 +46,14 @@ export default function SettingsProvider({ children }) {
   );
 }
 
+export function useSettings() {
+  const settings = useContext(SettingsContext);
+  return [settings.data, settings.update];
+}
+
 SettingsProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node.isRequired,
     PropTypes.arrayOf(PropTypes.node).isRequired,
   ]).isRequired,
-};
-
-export {
-  SettingsContext,
 };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Text from '../components/styled-text';
 
 export default function Confirm(props) {
   console.log(props.route.params);
