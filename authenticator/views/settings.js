@@ -1,7 +1,9 @@
 import React from 'react';
-import { SectionList, Text, StyleSheet } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { SectionList, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PropTypes } from 'prop-types';
+import Text from '../components/styled-text';
+import { useSettings } from '../settings-provider';
 
 const styles = StyleSheet.create({
   settings: {
@@ -14,7 +16,6 @@ const styles = StyleSheet.create({
   settingsButton: {
     marginBottom: 1,
     borderRadius: 4,
-    backgroundColor: 'white',
   },
   settingsButtonText: {
     fontSize: 16,
@@ -29,10 +30,15 @@ function SettingsHeader({ title }) {
 }
 
 function SettingsButton({ title, onPress }) {
+  const [settings] = useSettings();
+  const settingsStyle = {
+    backgroundColor: settings.accentColor,
+  };
+
   return (
-    <TouchableHighlight onPress={onPress} underlayColor="lightgray" style={styles.settingsButton}>
+    <TouchableOpacity onPress={onPress} style={[settingsStyle, styles.settingsButton]}>
       <Text style={styles.settingsButtonText}>{title}</Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
@@ -91,8 +97,12 @@ export default function Settings({ navigation }) {
       style={styles.settings}
       sections={sections}
       keyExtractor={(item, index) => item + index}
-      renderItem={({ item }) => SettingsButton(item)}
-      renderSectionHeader={({ section }) => SettingsHeader(section)}
+      renderItem={({ item: { title, onPress } }) => (
+        <SettingsButton title={title} onPress={onPress} />
+      )}
+      renderSectionHeader={({ section: { title } }) => (
+        <SettingsHeader title={title} />
+      )}
     />
   );
 }

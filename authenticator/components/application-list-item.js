@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import ApplicationListIcon from './application-list-icon';
+import Text from './styled-text';
+import { useSettings } from '../settings-provider';
 
 export default function ApplicationListItem({ item }) {
   const styles = StyleSheet.create({
@@ -12,6 +14,8 @@ export default function ApplicationListItem({ item }) {
       alignItems: 'center',
       margin: 10,
       height: 100,
+      padding: 15,
+      borderRadius: 10,
     },
     nameText: {
       fontSize: 20,
@@ -24,8 +28,13 @@ export default function ApplicationListItem({ item }) {
   const width = 75;
   const height = 75;
 
+  const [settings] = useSettings();
+  const settingsStyle = {
+    backgroundColor: settings.accentColor,
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[settingsStyle, styles.container]}>
       <View>
         <Text style={styles.nameText}>{item.name}</Text>
         <Text style={styles.usernameText}>{item.username}</Text>
