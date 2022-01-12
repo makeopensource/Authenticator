@@ -8,6 +8,8 @@ import Settings from './views/settings';
 import New from './views/new';
 import Confirm from './views/confirm';
 import { SettingsButton, NewButton, HomeButton } from './components/navigation-buttons';
+import ColorPickerSetting from './views/color-picker-setting';
+import SettingsProvider from './settings-provider';
 
 const exampleData = [
   {
@@ -30,45 +32,52 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <View style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="application-list" screenOptions={{ headerTitleAlign: 'center' }}>
-          <Stack.Screen
-            name="application-list"
-            options={(props) => ({
-              title: 'Application List',
-              headerLeft: () => NewButton(props),
-              headerRight: () => SettingsButton(props),
-            })}
-          >
-            {/* This should be passed through the stack screen component prop in the future */}
-            {({ navigation }) => <ApplicationList navigation={navigation} data={exampleData} />}
-          </Stack.Screen>
-          <Stack.Screen
-            name="settings"
-            component={Settings}
-            options={(props) => ({
-              title: 'Settings',
-              headerLeft: () => HomeButton(props),
-            })}
-          />
-          <Stack.Screen
-            name="new"
-            component={New}
-            options={(props) => ({
-              title: 'New',
-              headerLeft: () => HomeButton(props),
-            })}
-          />
-          <Stack.Screen
-            name="confirm"
-            component={Confirm}
-            options={(props) => ({
-              title: 'Confirm',
-              headerLeft: () => HomeButton(props),
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SettingsProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="application-list" screenOptions={{ headerTitleAlign: 'center' }}>
+            <Stack.Screen
+              name="application-list"
+              options={(props) => ({
+                title: 'Application List',
+                headerLeft: () => NewButton(props),
+                headerRight: () => SettingsButton(props),
+              })}
+            >
+              {/* This should be passed through the stack screen component prop in the future */}
+              {({ navigation }) => <ApplicationList navigation={navigation} data={exampleData} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="settings"
+              component={Settings}
+              options={(props) => ({
+                title: 'Settings',
+                headerLeft: () => HomeButton(props),
+              })}
+            />
+            <Stack.Screen
+              name="color-picker-setting"
+              component={ColorPickerSetting}
+              options={{ title: 'Settings' }}
+            />
+            <Stack.Screen
+              name="new"
+              component={New}
+              options={(props) => ({
+                title: 'New',
+                headerLeft: () => HomeButton(props),
+              })}
+            />
+            <Stack.Screen
+              name="confirm"
+              component={Confirm}
+              options={(props) => ({
+                title: 'Confirm',
+                headerLeft: () => HomeButton(props),
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SettingsProvider>
       {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="auto" />
     </View>
