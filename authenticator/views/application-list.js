@@ -8,7 +8,7 @@ export default function ApplicationList({ data }) {
     <View>
       <FlatList
         data={data}
-        renderItem={ApplicationListItem}
+        renderItem={({ item }) => <ApplicationListItem item={item} />}
         keyExtractor={(_, i) => i.toString()}
       />
     </View>

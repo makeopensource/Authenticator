@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
 import ColorPalette from 'react-native-color-palette';
-import { SettingsContext } from '../settings-provider';
+import Text from '../components/styled-text';
+import { useSettings } from '../settings-provider';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,8 +18,8 @@ const styles = StyleSheet.create({
 
 export default function ColorPickerSetting({ route }) {
   const { key, title } = route.params;
-  const settings = useContext(SettingsContext);
-  const color = settings.data[key];
+  const [settings, updateSettings] = useSettings();
+  const color = settings[key];
 
   const colors = [
     '#C0392B', '#E74C3C', '#9B59B6', '#8E44AD', '#2980B9', '#3498DB', '#1ABC9C',
@@ -31,7 +32,7 @@ export default function ColorPickerSetting({ route }) {
       <Text style={styles.title}>{title}</Text>
       <ColorPalette
         colors={colors}
-        onChange={(value) => settings.update({ [key]: value })}
+        onChange={(value) => updateSettings({ [key]: value })}
         value={color}
         title=""
         scaleToWindow
