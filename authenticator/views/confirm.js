@@ -48,12 +48,12 @@ Confirm.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
-  route: {
-    params: {
+  route: PropTypes.shape({
+    params: PropTypes.shape({
       issuer: PropTypes.string.isRequired,
       account: PropTypes.string.isRequired,
-    },
-  },
+    }),
+  }),
 };
 
 Confirm.defaultProps = {
