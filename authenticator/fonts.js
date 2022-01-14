@@ -5,21 +5,17 @@ import { Platform } from 'react-native';
 
 const iosFonts = {
   Arial: 'Arial',
-  // Courier: 'Courier',
-  // Helvetica: 'Helvetica',
   Verdana: 'Verdana',
-  // 'San Francisco': 'San Francisco',
   'Times New Roman': 'Times New Roman',
 };
-const iosDefault = 'San Francisco';
+const iosDefault = 'Verdana';
 
 const androidFonts = {
-  normal: 'Normal',
   serif: 'Serif',
   'sans-serif': 'Sans Serif',
   monospace: 'Monospace',
 };
-const androidDefault = 'Roboto';
+const androidDefault = 'sans-serif';
 
 const webFonts = {
   'sans-serif': 'Sans Serif',
@@ -30,10 +26,18 @@ const webFonts = {
 };
 const webDefault = 'sans-serif';
 
-function getFonts() {
-  if (Platform.OS === 'ios') return iosFonts;
-  if (Platform.OS === 'android') return androidFonts;
-  return webFonts;
+// Converts objects mapping dropdown values to labels into a list of items
+// An item is an object containing a value and a label (used directly by dropdown)
+// Ex. toItems(webFonts) ->
+//  [{value: 'sans-serif', label: 'Sans Serif'}, {value: serif, label: 'Serif'}, ...]
+function toItems(obj) {
+  return Object.entries(obj).map(([value, label]) => ({ value, label }));
+}
+
+function getFontItems() {
+  if (Platform.OS === 'ios') return toItems(iosFonts);
+  if (Platform.OS === 'android') return toItems(androidFonts);
+  return toItems(webFonts);
 }
 
 function getDefaultFont() {
@@ -43,6 +47,6 @@ function getDefaultFont() {
 }
 
 export {
-  getFonts,
+  getFontItems,
   getDefaultFont,
 };

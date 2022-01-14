@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PropTypes } from 'prop-types';
 import Text from '../components/styled-text';
 import { useSettings } from '../settings-provider';
-import { getFonts } from '../fonts';
+import { getFontItems } from '../fonts';
 
 const styles = StyleSheet.create({
   settings: {
@@ -52,7 +52,7 @@ export default function Settings({ navigation }) {
         onPress: () => navigation.navigate('dropdown-setting', {
           key: 'fontFamily',
           title: 'Font',
-          options: Object.entries(getFonts()),
+          items: getFontItems(),
         }),
       },
       { title: 'Font Scale', onPress: () => console.log('Font Scale') },
