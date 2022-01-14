@@ -10,6 +10,7 @@ import Confirm from './views/confirm';
 import { SettingsButton, NewButton, HomeButton } from './components/navigation-buttons';
 import ColorPickerSetting from './views/color-picker-setting';
 import SettingsProvider, { useSettings } from './settings-provider';
+import DropdownSetting from './views/dropdown-setting';
 
 const exampleData = [
   {
@@ -45,6 +46,7 @@ function AppBody() {
   const [settings] = useSettings();
   const contentStyle = { backgroundColor: settings.primaryColor };
   const headerStyle = { backgroundColor: settings.accentColor };
+  const headerTitleStyle = { fontFamily: settings.fontFamily, color: settings.fontColor };
   const headerTintColor = settings.fontColor;
 
   return (
@@ -55,6 +57,8 @@ function AppBody() {
           headerTitleAlign: 'center',
           contentStyle,
           headerStyle,
+          headerTitleStyle,
+          headerBackTitleStyle: headerTitleStyle,
           headerTintColor,
         }}
       >
@@ -80,6 +84,11 @@ function AppBody() {
         <Stack.Screen
           name="color-picker-setting"
           component={ColorPickerSetting}
+          options={{ title: 'Settings' }}
+        />
+        <Stack.Screen
+          name="dropdown-setting"
+          component={DropdownSetting}
           options={{ title: 'Settings' }}
         />
         <Stack.Screen
