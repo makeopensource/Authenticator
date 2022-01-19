@@ -5,7 +5,7 @@ import ApplicationListItem from '../components/application-list-item';
 
 export default function ApplicationList({ data }) {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={data}
         renderItem={({ item }) => <ApplicationListItem item={item} />}

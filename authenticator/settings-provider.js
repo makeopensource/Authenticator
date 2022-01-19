@@ -3,11 +3,14 @@ import React, {
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { getSettingsStorage, updateSettingsStorage } from './settings-storage';
+import { getDefaultFont } from './fonts';
 
 const defaultSettings = {
   fontColor: '#000000',
   primaryColor: '#F2F2F2',
   accentColor: '#FFFFFF',
+  fontFamily: getDefaultFont(),
+  fontScale: 1,
 };
 const SettingsContext = React.createContext({
   data: defaultSettings,

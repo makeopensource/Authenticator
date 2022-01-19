@@ -7,6 +7,7 @@ export default function Text({ style, children }) {
   const [settings] = useSettings();
   const settingsStyle = {
     color: settings.fontColor,
+    fontFamily: settings.fontFamily,
   };
 
   return (

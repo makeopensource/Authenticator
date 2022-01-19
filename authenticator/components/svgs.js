@@ -1,14 +1,17 @@
 import React from 'react';
 import Svg, { Path, Circle, Polyline } from 'react-native-svg';
+import { useSettings } from '../settings-provider';
 
 function GearSvg() {
+  const [settings] = useSettings();
+
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
       fill="none"
-      stroke="currentColor"
+      stroke={settings.fontColor}
       strokeWidth={2}
     >
       <Circle cx={12} cy={12} r={3} />
@@ -18,13 +21,15 @@ function GearSvg() {
 }
 
 function PlusSvg() {
+  const [settings] = useSettings();
+
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
       fill="none"
-      stroke="currentColor"
+      stroke={settings.fontColor}
       strokeWidth={2}
     >
       <Circle cx={12} cy={12} r={10} />
@@ -34,13 +39,15 @@ function PlusSvg() {
 }
 
 function HomeSvg() {
+  const [settings] = useSettings();
+
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
       fill="none"
-      stroke="currentColor"
+      stroke={settings.fontColor}
       strokeWidth={2}
     >
       <Path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />

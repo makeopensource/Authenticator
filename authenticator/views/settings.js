@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PropTypes } from 'prop-types';
 import Text from '../components/styled-text';
 import { useSettings } from '../settings-provider';
+import { getFontItems } from '../fonts';
 
 const styles = StyleSheet.create({
   settings: {
@@ -46,8 +47,15 @@ export default function Settings({ navigation }) {
   const accessibility = {
     title: 'Accessibility',
     data: [
-      { title: 'Font', onPress: () => console.log('Font') },
-      { title: 'Font Size', onPress: () => console.log('Font Size') },
+      {
+        title: 'Font',
+        onPress: () => navigation.navigate('dropdown-setting', {
+          key: 'fontFamily',
+          title: 'Font',
+          items: getFontItems(),
+        }),
+      },
+      { title: 'Font Scale', onPress: () => console.log('Font Scale') },
       {
         title: 'Font Color',
         onPress: () => navigation.navigate('color-picker-setting', {
