@@ -3,6 +3,14 @@ import { Platform } from 'react-native';
 // key = dropdown value
 // value = dropdown label
 
+const fontScales = {
+  1: '1.00x',
+  1.25: '1.25x',
+  1.5: '1.50x',
+  1.75: '1.75x',
+  2: '2.00x',
+};
+
 const iosFonts = {
   Arial: 'Arial',
   Verdana: 'Verdana',
@@ -34,6 +42,10 @@ function toItems(obj) {
   return Object.entries(obj).map(([value, label]) => ({ value, label }));
 }
 
+function getFontScales() {
+  return toItems(fontScales);
+}
+
 function getFontItems() {
   if (Platform.OS === 'ios') return toItems(iosFonts);
   if (Platform.OS === 'android') return toItems(androidFonts);
@@ -47,6 +59,7 @@ function getDefaultFont() {
 }
 
 export {
+  getFontScales,
   getFontItems,
   getDefaultFont,
 };

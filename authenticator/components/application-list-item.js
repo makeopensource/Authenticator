@@ -13,12 +13,11 @@ export default function ApplicationListItem({ item }) {
       justifyContent: 'space-between',
       alignItems: 'center',
       margin: 10,
-      height: 100,
       padding: 15,
       borderRadius: 10,
     },
     nameText: {
-      fontSize: 20,
+      fontSize: 18,
     },
     usernameText: {
       fontStyle: 'italic',
