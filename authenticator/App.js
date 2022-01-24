@@ -7,9 +7,12 @@ import ApplicationList from './views/application-list';
 import Settings from './views/settings';
 import New from './views/new';
 import Confirm from './views/confirm';
-import { SettingsButton, NewButton, HomeButton } from './components/navigation-buttons';
+import {
+  SettingsButton, NewButton, HomeButton, BackButton,
+} from './components/navigation-buttons';
 import ColorPickerSetting from './views/color-picker-setting';
 import SettingsProvider, { useSettings } from './settings-provider';
+import Text from './components/styled-text';
 import DropdownSetting from './views/dropdown-setting';
 
 const exampleData = [
@@ -46,8 +49,14 @@ function AppBody() {
   const [settings] = useSettings();
   const contentStyle = { backgroundColor: settings.primaryColor };
   const headerStyle = { backgroundColor: settings.accentColor };
-  const headerTitleStyle = { fontFamily: settings.fontFamily, color: settings.fontColor };
   const headerTintColor = settings.fontColor;
+
+  const titles = {
+    'application-list': <Text>Application List</Text>,
+    settings: <Text>Settings</Text>,
+    new: <Text>New</Text>,
+    confirm: <Text>Confirm</Text>,
+  };
 
   return (
     <NavigationContainer>
@@ -57,15 +66,13 @@ function AppBody() {
           headerTitleAlign: 'center',
           contentStyle,
           headerStyle,
-          headerTitleStyle,
-          headerBackTitleStyle: headerTitleStyle,
           headerTintColor,
         }}
       >
         <Stack.Screen
           name="application-list"
           options={(props) => ({
-            title: 'Application List',
+            headerTitle: () => titles['application-list'],
             headerLeft: () => NewButton(props),
             headerRight: () => SettingsButton(props),
           })}
@@ -77,25 +84,31 @@ function AppBody() {
           name="settings"
           component={Settings}
           options={(props) => ({
-            title: 'Settings',
+            headerTitle: () => titles.settings,
             headerLeft: () => HomeButton(props),
           })}
         />
         <Stack.Screen
           name="color-picker-setting"
           component={ColorPickerSetting}
-          options={{ title: 'Settings' }}
+          options={(props) => ({
+            headerTitle: () => titles.settings,
+            headerLeft: () => BackButton(props),
+          })}
         />
         <Stack.Screen
           name="dropdown-setting"
           component={DropdownSetting}
-          options={{ title: 'Settings' }}
+          options={(props) => ({
+            headerTitle: () => titles.settings,
+            headerLeft: () => BackButton(props),
+          })}
         />
         <Stack.Screen
           name="new"
           component={New}
           options={(props) => ({
-            title: 'New',
+            headerTitle: () => titles.new,
             headerLeft: () => HomeButton(props),
           })}
         />
@@ -103,7 +116,7 @@ function AppBody() {
           name="confirm"
           component={Confirm}
           options={(props) => ({
-            title: 'Confirm',
+            headerTitle: () => titles.confirm,
             headerLeft: () => HomeButton(props),
           })}
         />
