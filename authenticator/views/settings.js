@@ -1,17 +1,17 @@
 import React from 'react';
-import { SectionList, StyleSheet } from 'react-native';
+import { View, SectionList, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { PropTypes } from 'prop-types';
 import Text from '../components/styled-text';
 import { useSettings } from '../settings-provider';
-import { getFontItems } from '../fonts';
+import { getFontItems, getFontScales } from '../font-settings';
 
 const styles = StyleSheet.create({
   settings: {
     margin: 10,
   },
   settingsHeader: {
-    fontSize: 24,
+    fontSize: 20,
     marginBottom: 5,
   },
   settingsButton: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   settingsButtonText: {
-    fontSize: 16,
+    fontSize: 14,
     padding: 8,
   },
 });
@@ -43,6 +43,12 @@ function SettingsButton({ title, onPress }) {
   );
 }
 
+function SettingsFooter() {
+  return (
+    <View style={{ margin: 5 }} />
+  );
+}
+
 export default function Settings({ navigation }) {
   const accessibility = {
     title: 'Accessibility',
@@ -55,7 +61,14 @@ export default function Settings({ navigation }) {
           items: getFontItems(),
         }),
       },
-      { title: 'Font Scale', onPress: () => console.log('Font Scale') },
+      {
+        title: 'Font Scale',
+        onPress: () => navigation.navigate('dropdown-setting', {
+          key: 'fontScale',
+          title: 'Font Scale',
+          items: getFontScales().sort((a, b) => a.value - b.value),
+        }),
+      },
       {
         title: 'Font Color',
         onPress: () => navigation.navigate('color-picker-setting', {
@@ -111,6 +124,7 @@ export default function Settings({ navigation }) {
       renderSectionHeader={({ section: { title } }) => (
         <SettingsHeader title={title} />
       )}
+      renderSectionFooter={() => <SettingsFooter />}
     />
   );
 }

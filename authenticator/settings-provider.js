@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { PropTypes } from 'prop-types';
 import { getSettingsStorage, updateSettingsStorage } from './settings-storage';
-import { getDefaultFont } from './fonts';
+import { getDefaultFont } from './font-settings';
 
 const defaultSettings = {
   fontColor: '#000000',
