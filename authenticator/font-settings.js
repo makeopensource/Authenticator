@@ -7,8 +7,6 @@ const fontScales = {
   1: '1.00x',
   1.25: '1.25x',
   1.5: '1.50x',
-  1.75: '1.75x',
-  2: '2.00x',
 };
 
 const iosFonts = {
