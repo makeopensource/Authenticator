@@ -4,16 +4,20 @@ import PropTypes from 'prop-types';
 import SvgButton from '../components/svg-button';
 import { SaveSvg } from '../components/svgs';
 import Text from '../components/styled-text';
+import TokenStorage from '../token-storage';
 
 // This is where the logic would go for taking the information object and storing it
-function save(information) {
-  console.log(information);
+async function save(information, key) {
+  await TokenStorage.update(key, information);
 }
 
 
 
-export default function Confirm(props) {
-  const information = props.route.params;
+export default async function Confirm(props) {
+  const key = props.route.params;
+  console.log(key)
+
+  const information = await TokenStorage.get(key)
 
   return (
     <View style={{ padding: 10 }}>
@@ -34,8 +38,7 @@ export default function Confirm(props) {
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
         <SvgButton 
           onPress={() => {
-            save(information);
-            props.navigation.navigate('application-list', props); 
+            save(information, key).then(() => props.navigation.navigate('application-list', props))
           }}
           svg={SaveSvg()}
         />
@@ -50,8 +53,7 @@ Confirm.propTypes = {
   }).isRequired,
   route: PropTypes.shape({
     params: PropTypes.shape({
-      issuer: PropTypes.string.isRequired,
-      account: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
     }),
   }),
 };
@@ -59,8 +61,7 @@ Confirm.propTypes = {
 Confirm.defaultProps = {
   route:{
     params: {
-      issuer: '',
-      account: '',
+      key: '',
     },
   },
 };

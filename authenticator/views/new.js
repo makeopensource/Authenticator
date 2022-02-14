@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Text from '../components/styled-text';
+import insertNew from '../token-storage';
 
 export default function New(props) {
 
@@ -16,7 +17,7 @@ export default function New(props) {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
 
     // Prevent multiple, unintended scans of the same QR code
@@ -42,13 +43,15 @@ export default function New(props) {
     information.account = decoded.match(":[^:]*[?]")[0].slice(1, -1);
 
     const querryParams = decoded.match("[?].*")[0].slice(1).split("&");
-    for (let cur of querryParams) {
-      let keyVal = cur.split("=");
-      information[keyVal[0]] = keyVal[1];
-    }
 
-    props.navigation.navigate('confirm', information);
+    querryParams.forEach((cur) => {
+      const keyVal = cur.split('=');
+      const [key, val] = keyVal
+      information[key] = val
+    })
 
+    insertNew(information).then((key) => console.log(key));
+    // (key) => props.navigation.navigate('confirm', { key })
   };
 
   if (hasPermission === null) {
