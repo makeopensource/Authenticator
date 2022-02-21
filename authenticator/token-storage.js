@@ -29,13 +29,14 @@ const keyExists = async (key) => {
 
 const generateKey = async () => {
   let newKey = '';
-  while (newKey === '' || keyExists(newKey)) {
+  while (newKey === '' || await keyExists(newKey)) {
     newKey = JSON.stringify(Math.floor(Math.random() * 100000000));
   }
   return newKey;
 };
 
 const insertNew = async (data) => {
+  console.log("Insert New Run")
   const key = await generateKey();
   await SecureStore.setItemAsync(key, JSON.stringify(data));
   const keys = await getKeys();
@@ -59,9 +60,11 @@ const getAll = async () => {
   return Promise.all(results);
 };
 
-export default {
-  insertNew,
-  update,
-  get,
-  getAll
-};
+module.exports.insertNew = insertNew;
+
+// {
+//   insertNew,
+//   update,
+//   get,
+//   getAll
+// };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Text from '../components/styled-text';
-import insertNew from '../token-storage';
+import { insertNew } from '../token-storage';
 
 export default function New(props) {
 
@@ -50,8 +50,8 @@ export default function New(props) {
       information[key] = val
     })
 
-    insertNew(information).then((key) => console.log(key));
-    // (key) => props.navigation.navigate('confirm', { key })
+
+    insertNew(information).then((key) => props.navigation.navigate('confirm', { key }));
   };
 
   if (hasPermission === null) {
