@@ -103,6 +103,7 @@ export default function Settings({ navigation }) {
     title: 'Information',
     data: [
       { title: 'User Guide', onPress: () => console.log('User Guide') },
+      { title: 'License', onPress: () => navigation.navigate('license') },
       { title: 'Privacy Policy', onPress: () => console.log('Privacy Policy') },
     ],
   };
