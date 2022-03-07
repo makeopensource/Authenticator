@@ -49,10 +49,8 @@ const update = async (key, data) => {
   await SecureStore.setItemAsync(key, JSON.stringify(data));
 };
 
-const get = async (key) => {
-  console.log("get key")
-  return JSON.parse(await SecureStore.getItemAsync(key));
-}
+const get = async (key) => JSON.parse(await SecureStore.getItemAsync(key))
+
 
 const getAll = async () => {
   const results = [];

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import Text from '../components/styled-text';
@@ -17,7 +18,7 @@ export default function New(props) {
     })();
   }, []);
 
-  const handleBarCodeScanned = async ({ type, data }) => {
+  const handleBarCodeScanned = async ({ data }) => {
     setScanned(true);
 
     // Prevent multiple, unintended scans of the same QR code
@@ -50,8 +51,8 @@ export default function New(props) {
       information[key] = val
     })
 
-
-    insertNew(information).then((key) => props.navigation.navigate('confirm', { key }));
+    const { navigation } = props
+    insertNew(information).then((key) => navigation.navigate('confirm', { key }));
   };
 
   if (hasPermission === null) {
@@ -78,3 +79,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+const newPropTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+};
+
+const newDefaultProps = {
+};
+
+New.propTypes = newPropTypes;
+New.defaultProps = newDefaultProps;

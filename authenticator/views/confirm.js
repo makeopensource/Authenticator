@@ -13,19 +13,18 @@ async function save(information, key) {
 
 
 
-export default async function Confirm(props) {
+export default function Confirm(props) {
   const { key } = props.route.params;
   console.log(key)
 
-  const information = {
-    account: 'account',
-    issuer: 'issuer'
+  let information = {
+    account: '',
+    issuer: ''
   }
 
-  // get(key).then((i) => {
-  //   information = i;
-  // })
-  console.log(information)
+  get(key).then((i) => {
+    information = i;
+  })
 
   return (
     <View style={{ padding: 10 }}>
