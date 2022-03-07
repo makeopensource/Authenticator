@@ -4,20 +4,28 @@ import PropTypes from 'prop-types';
 import SvgButton from '../components/svg-button';
 import { SaveSvg } from '../components/svgs';
 import Text from '../components/styled-text';
-import TokenStorage from '../token-storage';
+import { update, get } from '../token-storage';
 
 // This is where the logic would go for taking the information object and storing it
 async function save(information, key) {
-  await TokenStorage.update(key, information);
+  await update(key, information);
 }
 
 
 
 export default async function Confirm(props) {
-  const key = props.route.params;
+  const { key } = props.route.params;
   console.log(key)
 
-  const information = await TokenStorage.get(key)
+  const information = {
+    account: 'account',
+    issuer: 'issuer'
+  }
+
+  // get(key).then((i) => {
+  //   information = i;
+  // })
+  console.log(information)
 
   return (
     <View style={{ padding: 10 }}>
