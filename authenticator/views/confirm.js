@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
 import SvgButton from '../components/svg-button';
@@ -11,20 +11,21 @@ async function save(information, key) {
   await update(key, information);
 }
 
-
-
 export default function Confirm(props) {
-  const { key } = props.route.params;
-  console.log(key)
+  const { route } = props
+  const { key } = route.params;
 
-  let information = {
+  const [information, setInformation] = useState({
     account: '',
     issuer: ''
-  }
-
-  get(key).then((i) => {
-    information = i;
   })
+
+  useEffect(() => {
+    (async () => {
+      const i = await get(key);
+      setInformation(i);
+    })();
+  }, []);
 
   return (
     <View style={{ padding: 10 }}>
@@ -45,7 +46,8 @@ export default function Confirm(props) {
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
         <SvgButton 
           onPress={() => {
-            save(information, key).then(() => props.navigation.navigate('application-list', props))
+            const { navigation } = props
+            save(information, key).then(() => navigation.navigate('application-list', props))
           }}
           svg={SaveSvg()}
         />

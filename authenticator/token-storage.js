@@ -36,7 +36,6 @@ const generateKey = async () => {
 };
 
 const insertNew = async (data) => {
-  console.log("Insert New Run")
   const key = await generateKey();
   await SecureStore.setItemAsync(key, JSON.stringify(data));
   const keys = await getKeys();
