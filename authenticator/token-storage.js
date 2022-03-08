@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 
 const getKeys = async () => {
   try {
-    const value = await AsyncStorage.getItem('tokensKeys');
+    const value = await AsyncStorage.getItem('tokenKeys');
     if (value !== null) {
       return JSON.parse(value);
     }
@@ -54,7 +54,7 @@ const get = async (key) => JSON.parse(await SecureStore.getItemAsync(key))
 const getAll = async () => {
   const results = [];
   const keys = await getKeys();
-  keys.array.forEach((key) => {
+  keys.forEach((key) => {
     results.push(get(key));
   });
   return Promise.all(results);
