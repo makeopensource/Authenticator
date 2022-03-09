@@ -47,7 +47,7 @@ export default function Confirm(props) {
         <SvgButton 
           onPress={() => {
             const { navigation } = props
-            save(information, key).then(() => navigation.navigate('application-list', props))
+            save(information, key).then(() => navigation.navigate('application-list'))
           }}
           svg={SaveSvg()}
         />
