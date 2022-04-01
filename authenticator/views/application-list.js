@@ -1,44 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList } from 'react-native';
 import totp from 'totp-generator';
 import ApplicationListItem from '../components/application-list-item';
 import Text from '../components/styled-text';
-
-// Simulates function that retrieves application objects from storage
-async function getAll() {
-  await new Promise((resolve) => { setTimeout(resolve, 2000); });
-
-  return [
-    {
-      name: 'Application',
-      username: 'name',
-      totp: '000000',
-      uri: 'https://reactnative.dev/img/tiny_logo.png',
-    },
-  ];
-}
+import { getAll } from '../token-storage';
 
 export default function ApplicationList() {
   const INTERVAL = 1000;
   const [data, setData] = useState(null);
+  const mounted = useRef(false);
 
-  console.log(data);
-
-  // function update() {
-  //   if (data) {
-  //     const updatedData = data.current.map((app) => {
-  //       const token = totp(app.secret, { period: INTERVAL / 1000 });
-  //       const updated = { ...app };
-  //       updated.totp = token;
-  //       return updated;
-  //     });
-  //     setData(updatedData);
-  //   }
-  // }
-
-  function test() {
-    console.log(data);
-  }
+  setTimeout(() => {
+    if (mounted.current && data) {
+      const updatedData = data.map((app) => {
+        const token = totp(app.secret);
+        const appData = { ...app };
+        appData.totp = token;
+        return appData;
+      });
+      setData(updatedData);
+    }
+  }, INTERVAL);
 
   // Loads data from storage and updates application list
   useEffect(() => {
@@ -47,8 +29,9 @@ export default function ApplicationList() {
       setData(apps);
     };
 
-    setInterval(test, INTERVAL);
     fetchApps();
+    mounted.current = true;
+    return () => { mounted.current = false; };
   }, []);
 
   // If data is being fetched from storage
