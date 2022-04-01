@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList } from 'react-native';
 import totp from 'totp-generator';
 import ApplicationListItem from '../components/application-list-item';
@@ -18,29 +18,36 @@ async function getAll() {
   ];
 }
 
-function getNewData(apps, period) {
-  return apps.map((app) => {
-    // const token = totp(app.secret, { period });
-    // const updated = { ...app };
-    // updated.totp = token;
-    const updated = app;
-    return updated;
-  });
-}
-
 export default function ApplicationList() {
-  const INTERVAL = 30;
-  const [data, setData] = useState(null);
+  const INTERVAL = 100;
+  const [data, setData] = useState([]);
+
+  function update() {
+    if (data) {
+      const updatedData = data.current.map((app) => {
+        const token = totp(app.secret, { period: INTERVAL / 1000 });
+        const updated = { ...app };
+        updated.totp = token;
+        return updated;
+      });
+      setData(updatedData);
+    }
+  }
+
+  function test() {
+    console.log(data);
+  }
 
   // Loads data from storage and updates application list
   useEffect(() => {
+    console.log('onmount');
     const fetchApps = async () => {
       const apps = await getAll();
       setData(apps);
-      setTimeout(() => setData(getNewData(data, INTERVAL)), INTERVAL);
     };
 
-    fetchApps();
+    setInterval(test, INTERVAL);
+    fetchApps().then((apps) => setData(apps));
   }, []);
 
   // If data is being fetched from storage
