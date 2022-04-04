@@ -15,6 +15,7 @@ import ColorPickerSetting from './views/color-picker-setting';
 import SettingsProvider, { useSettings } from './settings-provider';
 import Text from './components/styled-text';
 import DropdownSetting from './views/dropdown-setting';
+import Toast from 'react-native-toast-message';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,7 @@ export default function App() {
       </SettingsProvider>
       {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="auto" />
+      <Toast />
     </View>
   );
 }
@@ -121,5 +123,6 @@ function AppBody() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    
   );
 }
