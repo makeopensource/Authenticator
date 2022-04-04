@@ -35,20 +35,24 @@ export default function ApplicationListItem({ item }) {
   return (
     <View style={[settingsStyle, styles.container]}>
       <View>
-        <Text style={styles.nameText}>{item.name}</Text>
-        <Text style={styles.usernameText}>{item.username}</Text>
+        <Text style={styles.nameText}>{item.issuer}</Text>
+        <Text style={styles.usernameText}>{item.account}</Text>
         <Text style={styles.totpText}>{item.totp}</Text>
       </View>
-      <ApplicationListIcon width={width} height={height} uri={item.uri} />
+      <ApplicationListIcon
+        width={width}
+        height={height}
+        uri={item.uri ?? 'https://reactnative.dev/img/tiny_logo.png'}
+      />
     </View>
   );
 }
 
 ApplicationListItem.propTypes = {
   item: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
+    issuer: PropTypes.string.isRequired,
+    account: PropTypes.string.isRequired,
     totp: PropTypes.string.isRequired,
-    uri: PropTypes.string.isRequired,
+    uri: PropTypes.string,
   }).isRequired,
 };

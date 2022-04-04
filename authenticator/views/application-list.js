@@ -1,9 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList } from 'react-native';
-import PropTypes from 'prop-types';
+import totp from 'totp-generator';
 import ApplicationListItem from '../components/application-list-item';
+import Text from '../components/styled-text';
+import { getAll } from '../token-storage';
 
-export default function ApplicationList({ data }) {
+export default function ApplicationList() {
+  const INTERVAL = 1000;
+  const [data, setData] = useState(null);
+  const mounted = useRef(false);
+
+  setTimeout(() => {
+    if (mounted.current && data) {
+      const updatedData = data.map((app) => {
+        const token = totp(app.secret);
+        const appData = { ...app };
+        appData.totp = token;
+        return appData;
+      });
+      setData(updatedData);
+    }
+  }, INTERVAL);
+
+  // Loads data from storage and updates application list
+  useEffect(() => {
+    const fetchApps = async () => {
+      const apps = await getAll();
+      setData(apps);
+    };
+
+    fetchApps();
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
+
+  // If data is being fetched from storage
+  if (!data) {
+    return (
+      <View style={{ flex: 1, margin: 30 }}>
+        <Text style={{ textAlign: 'center' }}>Loading applications...</Text>
+      </View>
+    );
+  }
+
+  // If there are no applications
+  if (!data.length) {
+    return (
+      <View style={{ flex: 1, margin: 30 }}>
+        <Text style={{ textAlign: 'center' }}>No applications found.</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -14,12 +62,3 @@ export default function ApplicationList({ data }) {
     </View>
   );
 }
-
-ApplicationList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    totp: PropTypes.string.isRequired,
-    uri: PropTypes.string.isRequired,
-  })).isRequired,
-};

@@ -16,15 +16,6 @@ import SettingsProvider, { useSettings } from './settings-provider';
 import Text from './components/styled-text';
 import DropdownSetting from './views/dropdown-setting';
 
-const exampleData = [
-  {
-    name: 'Application',
-    username: 'name',
-    totp: '000000',
-    uri: 'https://reactnative.dev/img/tiny_logo.png',
-  },
-];
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,15 +64,13 @@ function AppBody() {
       >
         <Stack.Screen
           name="application-list"
+          component={ApplicationList}
           options={(props) => ({
             headerTitle: () => titles['application-list'],
             headerLeft: () => NewButton(props),
             headerRight: () => SettingsButton(props),
           })}
-        >
-          {/* This should be passed through the stack screen component prop in the future */}
-          {({ navigation }) => <ApplicationList navigation={navigation} data={exampleData} />}
-        </Stack.Screen>
+        />
         <Stack.Screen
           name="settings"
           component={Settings}
