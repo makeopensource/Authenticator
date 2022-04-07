@@ -48,7 +48,11 @@ const update = async (key, data) => {
   await SecureStore.setItemAsync(key, JSON.stringify(data));
 };
 
-const get = async (key) => JSON.parse(await SecureStore.getItemAsync(key))
+const get = async (key) => {
+  const data = JSON.parse(await SecureStore.getItemAsync(key))
+  data.key = key
+  return data
+}
 
 
 const getAll = async () => {
@@ -60,10 +64,18 @@ const getAll = async () => {
   return Promise.all(results);
 };
 
+const remove = async (key) => {
+  SecureStore.deleteItemAsync(key)
+  const keys = await getKeys()
+  keys.splice(0, 1, key)
+  return keys
+};
+
 
 export {
   insertNew,
   update,
   get,
-  getAll
+  getAll,
+  remove
 };
