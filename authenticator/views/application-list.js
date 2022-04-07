@@ -34,6 +34,11 @@ export default function ApplicationList() {
     return () => { mounted.current = false; };
   }, []);
 
+  // Attempt at a function to set the data to the current one (Errors out or messes with menu)
+  // const fixData = (data) => {
+  //   setData(data);
+  // };
+
   // If data is being fetched from storage
   if (!data) {
     return (
@@ -56,7 +61,7 @@ export default function ApplicationList() {
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ApplicationListItem item={item} />}
+        renderItem={({ item }) => <ApplicationListItem item={item} data={data} /*fixData={fixData}*/ />} //Adding fixData to ApplicationListItem
         keyExtractor={(_, i) => i.toString()}
       />
     </View>
