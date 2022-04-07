@@ -26,7 +26,13 @@ export default function ApplicationList() {
   useEffect(() => {
     const fetchApps = async () => {
       const apps = await getAll();
-      setData(apps);
+      const loadedApps = apps.map((app) => {
+        const token = totp(app.secret);
+        const appData = { ...app };
+        appData.totp = token;
+        return appData;
+      });
+      setData(loadedApps);
     };
 
     fetchApps();
@@ -56,7 +62,7 @@ export default function ApplicationList() {
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ApplicationListItem item={item} />}
+        renderItem={({ item }) => <ApplicationListItem item={item} interval={30} />}
         keyExtractor={(_, i) => i.toString()}
       />
     </View>
