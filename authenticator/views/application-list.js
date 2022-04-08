@@ -61,7 +61,7 @@ export default function ApplicationList() {
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ApplicationListItem item={item} data={data} /*fixData={fixData}*/ />} //Adding fixData to ApplicationListItem
+        renderItem={({ item }) => <ApplicationListItem item={item} />}
         keyExtractor={(_, i) => i.toString()}
       />
     </View>

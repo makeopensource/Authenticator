@@ -7,8 +7,9 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { useSettings } from '../settings-provider';
 import Text from './styled-text';
 import ApplicationListIcon from './application-list-icon';
+import { remove } from '../token-storage'
 
-export default function ApplicationListItem({ item, data, fixData }) {
+export default function ApplicationListItem({ item }) {
   const [active, setActive] = useState(true);
 
   const styles = StyleSheet.create({
@@ -65,13 +66,12 @@ export default function ApplicationListItem({ item, data, fixData }) {
     backgroundColor: settings.accentColor,
   };
 
-  // Trying to figure this part out
   const deleteApp = (item) => {
+    remove(item.key);
     Toast.show({
       type: 'error',
       text1: 'Deleted Application',
     });
-    // data.splice(data.indexOf(item), 1); -----> New array of data without the one being removed
   };
 
   const deleteAppAlerts = () => {
@@ -135,5 +135,6 @@ ApplicationListItem.propTypes = {
     account: PropTypes.string.isRequired,
     totp: PropTypes.string.isRequired,
     uri: PropTypes.string,
+    key: PropTypes.string,
   }).isRequired,
 };
