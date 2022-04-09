@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Animated, TouchableOpacity, Alert } from 'react-native';
+import { Pie } from 'react-native-progress';
 import PropTypes from 'prop-types';
 import * as Clipboard from 'expo-clipboard';
 import Toast from 'react-native-toast-message';
@@ -9,42 +10,58 @@ import Text from './styled-text';
 import ApplicationListIcon from './application-list-icon';
 import { remove } from '../token-storage'
 
-export default function ApplicationListItem({ item, navigation }) {
-  const [active, setActive] = useState(true);
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 10,
+    padding: 15,
+    borderRadius: 10,
+  },
+  nameText: {
+    fontSize: 18,
+  },
+  usernameText: {
+    fontStyle: 'italic',
+  },
+  totp: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  totpText: {
+    fontSize: 18,
+  },
+  totpTextActive: {
+    fontSize: 30,
+  },
+  timer: {
+    paddingLeft: 10,
+  },
+  rightAction: {
+    backgroundColor: '#dd2c00',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  actionText: {
+    color: '#fff',
+    fontWeight: '600',
+    padding: 20,
+  },
+});
 
-  const styles = StyleSheet.create({
-    container: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      margin: 10,
-      padding: 15,
-      borderRadius: 10,
-    },
-    nameText: {
-      fontSize: 18,
-    },
-    usernameText: {
-      fontStyle: 'italic',
-    },
-    totpTextActive: {
-      fontSize: 30,
-    },
-    totpText: {
-      fontSize: 18,
-    },
-    rightAction: {
-      backgroundColor: '#dd2c00',
-      justifyContent: 'center',
-      flex: 1,
-    },
-    actionText: {
-      color: '#fff',
-      fontWeight: '600',
-      padding: 20,
-    },
-  });
+export default function ApplicationListItem({ item, interval, navigation }) {
+  const width = 75;
+  const height = 75;
+
+  const [active, setActive] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [settings] = useSettings();
+  const settingsStyle = {
+    backgroundColor: settings.accentColor,
+  };
 
   const onPress = () => {
     setActive(!active);
@@ -58,13 +75,16 @@ export default function ApplicationListItem({ item, navigation }) {
     }
   };
 
-  const width = 75;
-  const height = 75;
+  function updateTimer() {
+    const time = new Date().getTime();
+    const intervalMs = interval * 1000;
+    const updatedProgress = (time % intervalMs) / intervalMs;
+    setProgress(updatedProgress);
+  }
 
-  const [settings] = useSettings();
-  const settingsStyle = {
-    backgroundColor: settings.accentColor,
-  };
+  useEffect(() => {
+    setInterval(updateTimer, 200);
+  }, []);
 
   const deleteApp = () => {
     remove(item.key).then(() => {
@@ -120,7 +140,10 @@ export default function ApplicationListItem({ item, navigation }) {
         <View>
           <Text style={styles.nameText}>{item.issuer}</Text>
           <Text style={styles.usernameText}>{item.account}</Text>
-          <Text style={active ? styles.totpText : styles.totpTextActive}>{item.totp}</Text>
+          <View style={styles.totp}>
+            <Text style={active ? styles.totpText : styles.totpTextActive}>{item.totp}</Text>
+            <Pie style={styles.timer} progress={progress} size={24} />
+          </View>
         </View>
         <ApplicationListIcon
           width={width}
@@ -143,4 +166,5 @@ ApplicationListItem.propTypes = {
   navigation: PropTypes.shape({
     replace: PropTypes.func.isRequired,
   }).isRequired,
+  interval: PropTypes.number.isRequired,
 };

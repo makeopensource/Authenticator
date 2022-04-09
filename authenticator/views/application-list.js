@@ -11,7 +11,7 @@ export default function ApplicationList(props) {
   const [data, setData] = useState(null);
   const mounted = useRef(false);
 
-  setTimeout(() => {
+  const update = setTimeout(() => {
     if (mounted.current && data) {
       const updatedData = data.map((app) => {
         const token = totp(app.secret);
@@ -27,12 +27,22 @@ export default function ApplicationList(props) {
   useEffect(() => {
     const fetchApps = async () => {
       const apps = await getAll();
-      setData(apps);
+      const loadedApps = apps.map((app) => {
+        const token = totp(app.secret);
+        const appData = { ...app };
+        appData.totp = token;
+        return appData;
+      });
+      setData(loadedApps);
     };
 
     fetchApps();
     mounted.current = true;
-    return () => { mounted.current = false; };
+    return () => { 
+      mounted.current = false; 
+      console.log(update)
+      clearTimeout(update)
+    };
   }, []);
 
   // Attempt at a function to set the data to the current one (Errors out or messes with menu)
@@ -64,7 +74,7 @@ export default function ApplicationList(props) {
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ApplicationListItem item={item} navigation={navigation}/>}
+        renderItem={({ item }) => <ApplicationListItem item={item} navigation={navigation} interval={30} />}
         keyExtractor={(_, i) => i.toString()}
       />
     </View>
