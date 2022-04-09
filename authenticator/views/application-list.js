@@ -4,8 +4,9 @@ import totp from 'totp-generator';
 import ApplicationListItem from '../components/application-list-item';
 import Text from '../components/styled-text';
 import { getAll } from '../token-storage';
+import PropTypes from 'prop-types';
 
-export default function ApplicationList() {
+export default function ApplicationList(props) {
   const INTERVAL = 1000;
   const [data, setData] = useState(null);
   const mounted = useRef(false);
@@ -57,13 +58,21 @@ export default function ApplicationList() {
     );
   }
 
+  const {navigation} = props
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ApplicationListItem item={item} />}
+        renderItem={({ item }) => <ApplicationListItem item={item} navigation={navigation}/>}
         keyExtractor={(_, i) => i.toString()}
       />
     </View>
   );
 }
+
+ApplicationList.propTypes = {
+  navigation: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+};

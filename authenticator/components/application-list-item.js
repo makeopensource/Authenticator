@@ -9,7 +9,7 @@ import Text from './styled-text';
 import ApplicationListIcon from './application-list-icon';
 import { remove } from '../token-storage'
 
-export default function ApplicationListItem({ item }) {
+export default function ApplicationListItem({ item, navigation }) {
   const [active, setActive] = useState(true);
 
   const styles = StyleSheet.create({
@@ -66,12 +66,15 @@ export default function ApplicationListItem({ item }) {
     backgroundColor: settings.accentColor,
   };
 
-  const deleteApp = (item) => {
-    remove(item.key);
-    Toast.show({
-      type: 'error',
-      text1: 'Deleted Application',
-    });
+  const deleteApp = () => {
+    remove(item.key).then(() => {
+      Toast.show({
+        type: 'error',
+        text1: 'Deleted Application',
+      });
+      navigation.replace('application-list')
+    }
+    )
   };
 
   const deleteAppAlerts = () => {
@@ -86,7 +89,7 @@ export default function ApplicationListItem({ item }) {
         },
         {
           text: 'Delete',
-          onPress: () => deleteApp(item),
+          onPress: () => deleteApp(),
           style: 'default',
         },
       ]);
@@ -136,5 +139,8 @@ ApplicationListItem.propTypes = {
     totp: PropTypes.string.isRequired,
     uri: PropTypes.string,
     key: PropTypes.string,
+  }).isRequired,
+  navigation: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
   }).isRequired,
 };
