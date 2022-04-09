@@ -34,6 +34,11 @@ export default function ApplicationList() {
     return () => { mounted.current = false; };
   }, []);
 
+  // Attempt at a function to set the data to the current one (Errors out or messes with menu)
+  // const fixData = (data) => {
+  //   setData(data);
+  // };
+
   // If data is being fetched from storage
   if (!data) {
     return (

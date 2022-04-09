@@ -67,7 +67,8 @@ const getAll = async () => {
 const remove = async (key) => {
   SecureStore.deleteItemAsync(key)
   const keys = await getKeys()
-  keys.splice(0, 1, key)
+  keys.splice(keys.indexOf(key), 1)
+  storeKeys(keys)
   return keys
 };
 
