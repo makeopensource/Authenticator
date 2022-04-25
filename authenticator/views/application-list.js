@@ -38,17 +38,12 @@ export default function ApplicationList(props) {
 
     fetchApps();
     mounted.current = true;
-    return () => { 
-      mounted.current = false; 
-      console.log(update)
-      clearTimeout(update)
+    return () => {
+      mounted.current = false;
+      console.log(update);
+      clearTimeout(update);
     };
   }, []);
-
-  // Attempt at a function to set the data to the current one (Errors out or messes with menu)
-  // const fixData = (data) => {
-  //   setData(data);
-  // };
 
   // If data is being fetched from storage
   if (!data) {
@@ -68,7 +63,7 @@ export default function ApplicationList(props) {
     );
   }
 
-  const {navigation} = props
+  const {navigation} = props;
 
   return (
     <View style={{ flex: 1 }}>

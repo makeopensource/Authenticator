@@ -40,7 +40,14 @@ function toItems(obj) {
   return Object.entries(obj).map(([value, label]) => ({ value, label }));
 }
 
+const androidFontScales = [
+  { value: 1, label: '1.00x' },
+  { value: 1.25, label: '1.25x' },
+  { value: 1.5, label: '1.50x' },
+];
+
 function getFontScales() {
+  if (Platform.OS === 'android') return androidFontScales;
   return toItems(fontScales);
 }
 

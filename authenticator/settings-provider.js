@@ -21,7 +21,7 @@ export default function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(defaultSettings);
   const updateSettings = useCallback(
     async (newSettings) => {
-      if (await updateSettingsStorage(newSettings)) {
+      if (await updateSettingsStorage(newSettings.toString())) {
         const copy = { ...settings };
         setSettings(Object.assign(copy, newSettings));
       }

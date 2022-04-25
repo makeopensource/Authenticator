@@ -33,9 +33,11 @@ function Chevron(color) {
 }
 
 export default function DropdownSetting({ route }) {
-  const { key, title, items } = route.params;
+  const key = route.params.key.toString();
+  const title = route.params.title.toString();
+  const { items } = route.params;
   const [settings, updateSettings] = useSettings();
-  const setting = settings[key];
+  const setting = settings[key.toString()];
 
   const sharedStyles = {
     fontSize: 24,
