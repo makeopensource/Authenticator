@@ -3,12 +3,6 @@ import { Platform } from 'react-native';
 // key = dropdown value
 // value = dropdown label
 
-const fontScales = {
-  1: '1.00x',
-  1.25: '1.25x',
-  1.5: '1.50x',
-};
-
 const iosFonts = {
   Arial: 'Arial',
   Verdana: 'Verdana',
@@ -47,8 +41,7 @@ const androidFontScales = [
 ];
 
 function getFontScales() {
-  if (Platform.OS === 'android') return androidFontScales;
-  return toItems(fontScales);
+  return androidFontScales;
 }
 
 function getFontItems() {
