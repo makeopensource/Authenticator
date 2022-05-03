@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "authenticator",
-    "slug": "authenticator",
+    "name": "MOS Authenticator",
+    "slug": "open-auth",
+    "owner": "opensrc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,10 +18,12 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "4",
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Authenticator needs access to your Camera."
-      }
+      },
+      "bundleIdentifier": "org.makeopensource.authenticator"
     },
     "android": {
       "adaptiveIcon": {
