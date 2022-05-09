@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import ApplicationList from './views/application-list';
 import Settings from './views/settings';
 import New from './views/new';
@@ -14,7 +14,7 @@ import {
 } from './components/navigation-buttons';
 import ColorPickerSetting from './views/color-picker-setting';
 import SettingsProvider, { useSettings } from './settings-provider';
-import Text from './components/styled-text';
+// import Text from './components/styled-text';
 import DropdownSetting from './views/dropdown-setting';
 import Toast from 'react-native-toast-message';
 
