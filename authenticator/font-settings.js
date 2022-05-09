@@ -3,12 +3,6 @@ import { Platform } from 'react-native';
 // key = dropdown value
 // value = dropdown label
 
-const fontScales = {
-  1: '1.00x',
-  1.25: '1.25x',
-  1.5: '1.50x',
-};
-
 const iosFonts = {
   Arial: 'Arial',
   Verdana: 'Verdana',
@@ -40,8 +34,14 @@ function toItems(obj) {
   return Object.entries(obj).map(([value, label]) => ({ value, label }));
 }
 
+const fontScales = [
+  { value: 1, label: '1.00x' },
+  { value: 1.25, label: '1.25x' },
+  { value: 1.5, label: '1.50x' },
+];
+
 function getFontScales() {
-  return toItems(fontScales);
+  return fontScales;
 }
 
 function getFontItems() {
