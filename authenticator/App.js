@@ -8,6 +8,7 @@ import Settings from './views/settings';
 import New from './views/new';
 import Confirm from './views/confirm';
 import License from './views/license';
+import UserGuide from './views/user-guide';
 import {
   SettingsButton, NewButton, HomeButton, BackButton,
 } from './components/navigation-buttons';
@@ -51,6 +52,7 @@ function AppBody() {
     new: <Text>New</Text>,
     confirm: <Text>Confirm</Text>,
     license: <Text>License</Text>,
+    guide: <Text>User Guide</Text>,
   };
 
   return (
@@ -118,6 +120,14 @@ function AppBody() {
           component={License}
           options={(props) => ({
             headerTitle: () => titles.license,
+            headerLeft: () => BackButton(props),
+          })}
+        />
+        <Stack.Screen
+          name="guide"
+          component={UserGuide}
+          options={(props) => ({
+            headerTitle: () => titles.guide,
             headerLeft: () => BackButton(props),
           })}
         />

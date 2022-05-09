@@ -102,7 +102,7 @@ export default function Settings({ navigation }) {
   const information = {
     title: 'Information',
     data: [
-      { title: 'User Guide', onPress: () => console.log('User Guide') },
+      { title: 'User Guide', onPress: () => navigation.navigate('guide') },
       { title: 'License', onPress: () => navigation.navigate('license') },
       { title: 'Privacy Policy', onPress: () => console.log('Privacy Policy') },
     ],
