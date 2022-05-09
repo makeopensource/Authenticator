@@ -3,11 +3,13 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import ApplicationList from './views/application-list';
 import Settings from './views/settings';
 import New from './views/new';
 import Confirm from './views/confirm';
 import License from './views/license';
+import Privacy from './views/privacy-policy';
 import {
   SettingsButton, NewButton, HomeButton, BackButton,
 } from './components/navigation-buttons';
@@ -15,7 +17,6 @@ import ColorPickerSetting from './views/color-picker-setting';
 import SettingsProvider, { useSettings } from './settings-provider';
 import Text from './components/styled-text';
 import DropdownSetting from './views/dropdown-setting';
-import Toast from 'react-native-toast-message';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +52,7 @@ function AppBody() {
     new: <Text>New</Text>,
     confirm: <Text>Confirm</Text>,
     license: <Text>License</Text>,
+    privacy: <Text>Privacy Policy</Text>,
   };
 
   return (
@@ -121,8 +123,16 @@ function AppBody() {
             headerLeft: () => BackButton(props),
           })}
         />
+        <Stack.Screen
+          name="privacy"
+          component={Privacy}
+          options={(props) => ({
+            headerTitle: () => titles.privacy,
+            headerLeft: () => BackButton(props),
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-    
+
   );
 }
