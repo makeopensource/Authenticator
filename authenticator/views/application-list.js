@@ -4,13 +4,14 @@ import totp from 'totp-generator';
 import ApplicationListItem from '../components/application-list-item';
 import Text from '../components/styled-text';
 import { getAll } from '../token-storage';
+import PropTypes from 'prop-types';
 
-export default function ApplicationList() {
+export default function ApplicationList(props) {
   const INTERVAL = 1000;
   const [data, setData] = useState(null);
   const mounted = useRef(false);
 
-  setTimeout(() => {
+  const update = setTimeout(() => {
     if (mounted.current && data) {
       const updatedData = data.map((app) => {
         const token = totp(app.secret);
@@ -37,8 +38,17 @@ export default function ApplicationList() {
 
     fetchApps();
     mounted.current = true;
-    return () => { mounted.current = false; };
+    return () => { 
+      mounted.current = false; 
+      console.log(update)
+      clearTimeout(update)
+    };
   }, []);
+
+  // Attempt at a function to set the data to the current one (Errors out or messes with menu)
+  // const fixData = (data) => {
+  //   setData(data);
+  // };
 
   // If data is being fetched from storage
   if (!data) {
@@ -58,13 +68,21 @@ export default function ApplicationList() {
     );
   }
 
+  const {navigation} = props
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ApplicationListItem item={item} interval={30} />}
+        renderItem={({ item }) => <ApplicationListItem item={item} navigation={navigation} interval={30} />}
         keyExtractor={(_, i) => i.toString()}
       />
     </View>
   );
 }
+
+ApplicationList.propTypes = {
+  navigation: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+};
