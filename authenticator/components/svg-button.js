@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { useSettings } from '../settings-provider';
 
 export default function SvgButton({ onPress, svg }) {
-  const [settings] = useSettings();
-
   return (
     <TouchableWithoutFeedback
       onPress={onPress}
-      style={{ margin: 10, transform: [{ scale: settings.fontScale }] }}
+      style={{ margin: 10, }}
     >
       {svg}
     </TouchableWithoutFeedback>
