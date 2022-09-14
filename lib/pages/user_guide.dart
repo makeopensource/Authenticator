@@ -23,6 +23,9 @@ Widget build(BuildContext context){
               ],
             ),
           )
+      ),
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
       )
   );
 }
