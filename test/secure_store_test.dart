@@ -45,11 +45,11 @@ void main() {
     expect(accounts[1].uuid, accountTwo.uuid);
   });
 
-  test('duplicate accounts should not be added to secure store', () async {
+  test('duplicate accounts should throw an exception', () async {
     SecureStore store = SecureStore(FlutterSecureStorageMock());
 
     await store.addAccount(accountOne);
-    await store.addAccount(accountOne);
+    expect(store.addAccount(accountOne), throwsA(isA<Exception>()));
     await store.addAccount(accountTwo);
 
     List<Account> accounts = await store.getAccounts();
