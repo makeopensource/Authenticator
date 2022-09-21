@@ -11,8 +11,7 @@ class SecureStore {
   Future<List<Account>> getAccounts() async {
     String accountsValue = (await storage.read(key: "accounts")) ?? "[]";
     List<dynamic> accountsJson = jsonDecode(accountsValue);
-    List<Account> accounts =
-        List<Account>.from(accountsJson.map((json) => Account.fromJson(json)));
+    List<Account> accounts = List<Account>.from(accountsJson.map((json) => Account.fromJson(json)));
 
     return accounts;
   }
