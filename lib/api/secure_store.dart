@@ -23,7 +23,7 @@ class SecureStore {
     // Do not add account if ID already used
     for (Account element in accounts) {
       if (element.uuid == account.uuid) {
-        return;
+        throw Exception("Account with ID ${account.uuid} already in secure store.");
       }
     }
 
