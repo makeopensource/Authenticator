@@ -1,5 +1,5 @@
 import 'package:authenticator/api/secure_store.dart';
-import 'package:authenticator/pages/settings.dart';
+import 'package:authenticator/view/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:authenticator/view/home.dart';
