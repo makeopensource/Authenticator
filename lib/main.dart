@@ -16,16 +16,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Home(store: store),
-        appBar: AppBar(
-          title: const Text("Authenticator"),
-          centerTitle: true,
-        ),
-      ),
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => Home(store: store),
+      },
     );
   }
 }

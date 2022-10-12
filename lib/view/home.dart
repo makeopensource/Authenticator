@@ -11,30 +11,38 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Account>>(
-        future: store.getAccounts(),
-        builder: (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
-          if (snapshot.hasData) {
-            List<Account> accounts = snapshot.data!;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        centerTitle: true,
+      ),
+      body: FutureBuilder<List<Account>>(
+          future: store.getAccounts(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<Account>> snapshot) {
+            if (snapshot.hasData) {
+              List<Account> accounts = snapshot.data!;
 
-            // Test data
-            accounts.add(Account(uuid: "abc123"));
-            accounts.add(Account(uuid: "jbc123"));
-            accounts.add(Account(uuid: "lbc123"));
-            accounts.add(Account(uuid: "bbc123"));
-            accounts.add(Account(uuid: "nbc123"));
-            accounts.add(Account(uuid: "tbc123"));
-            accounts.add(Account(uuid: "wbc123"));
+              // Test data
+              accounts.add(Account(uuid: "abc123"));
+              accounts.add(Account(uuid: "jbc123"));
+              accounts.add(Account(uuid: "lbc123"));
+              accounts.add(Account(uuid: "bbc123"));
+              accounts.add(Account(uuid: "nbc123"));
+              accounts.add(Account(uuid: "tbc123"));
+              accounts.add(Account(uuid: "wbc123"));
 
-            return ListView(
-              children: accounts.map((Account account) => AccountTab(account: account)).toList()
-            );
-          } else if (snapshot.hasError) {
-            return const Text("Error!");
-          } else {
-            return const Text("Waiting for data...");
+              return ListView(
+                  children: accounts.map((Account account) =>
+                      AccountTab(account: account)).toList()
+              );
+            } else if (snapshot.hasError) {
+              return const Text("Error!");
+            } else {
+              return const Text("Waiting for data...");
+            }
           }
-        }
+      ),
     );
   }
 }
