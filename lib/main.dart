@@ -7,17 +7,14 @@ import 'reusable_widgets/AppCardForm.dart';
 import 'package:authenticator/api/secure_store.dart';
 import 'package:authenticator/view/home.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'widget/bottom_nav.dart';
 
+final SecureStore store = SecureStore(const FlutterSecureStorage());
 void main() {
-  runApp(MultiProvider(providers: [
-    Provider(create: (context) => Counter()),
-  ], child: MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  final SecureStore store = SecureStore(const FlutterSecureStorage());
   @override
   Widget build(BuildContext context) {
     final pageWidgets = [Home(store: store), AppCardForm(), TestPage()];
@@ -30,12 +27,11 @@ class MyApp extends StatelessWidget {
       },
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: pageWidgets[counter.pageIndex],
+        body: StatefulWidget1(),
         appBar: AppBar(
           title: const Text("Authenticator"),
           centerTitle: true,
         ),
-        bottomNavigationBar: const BottomNav(),
       ),
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -44,11 +40,59 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Counter extends StatelessWidget {
-  const Counter({super.key});
-  static int pageIndex = 0;
+class StatefulWidget1 extends StatefulWidget {
+  const StatefulWidget1({super.key});
+  // SecureStore? HomePage;
+  // StatefulWidget1(SecureStore HomePage) {
+  //   this.HomePage = HomePage;
+  // }
   @override
+  State<StatefulWidget1> createState() => _StatefulWidget1State();
+}
+
+class _StatefulWidget1State extends State<StatefulWidget1> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static final List<Widget> _widgetOptions = <Widget>[
+    Home(store: store),
+    const AppCardForm(),
+    const Text(
+      'Settings',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle),
+            label: 'Create',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+    );
   }
 }

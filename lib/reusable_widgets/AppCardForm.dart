@@ -25,7 +25,7 @@ class _AppCardFormState extends State<AppCardForm> {
               height: height * 0.04,
             ),
             const Text(
-              "Edit",
+              "New",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,

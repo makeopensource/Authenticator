@@ -15,9 +15,9 @@ class TestPage extends StatelessWidget {
     // while (i < 15) {}
     var TestList = <Widget>[];
     int i = 0;
-    TestList.add(
-      AppCardForm(),
-    );
+    // TestList.add(
+    //   AppCardForm(),
+    // );
     while (i < 12) {
       var faker = new Faker();
       TestList.add(AppCard(
@@ -40,12 +40,12 @@ class TestPage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: const <Widget>[
-            Text(
-              "Test Page",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-            ),
-          ],
+          // children: const <Widget>[
+          //   Text(
+          //     "Test Page",
+          //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          //   ),
+          // ],
         ),
         centerTitle: true,
       ),
