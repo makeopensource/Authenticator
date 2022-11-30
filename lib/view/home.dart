@@ -15,11 +15,16 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () => Navigator.of(context).pushNamed('/addAccount'),
+              icon: const Icon(Icons.add)),
+        ],
       ),
       body: FutureBuilder<List<Account>>(
           future: store.getAccounts(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<Account>> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Account>> snapshot) {
             if (snapshot.hasData) {
               List<Account> accounts = snapshot.data!;
 
@@ -33,16 +38,15 @@ class Home extends StatelessWidget {
               accounts.add(Account(uuid: "wbc123"));
 
               return ListView(
-                  children: accounts.map((Account account) =>
-                      AccountTab(account: account)).toList()
-              );
+                  children: accounts
+                      .map((Account account) => AccountTab(account: account))
+                      .toList());
             } else if (snapshot.hasError) {
               return const Text("Error!");
             } else {
               return const Text("Waiting for data...");
             }
-          }
-      ),
+          }),
     );
   }
 }
