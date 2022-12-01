@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
                       context,
                       CupertinoPageRoute(builder: (context) => const SettingsPage()));
                 },
-                icon: Image.asset("lib/assets/gear.png"),
+                icon: const Icon(
+                  Icon.settings,
+                ),
               padding: const EdgeInsets.only(right: 20.0),
             )
           ],
