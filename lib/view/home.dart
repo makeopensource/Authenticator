@@ -15,6 +15,10 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pushNamed('/settings'),
+          icon: const Icon(Icons.settings),
+        ),
         actions: [
           IconButton(
               onPressed: () => Navigator.of(context).pushNamed('/addAccount'),
